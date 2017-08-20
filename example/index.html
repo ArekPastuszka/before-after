@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+    <head>
+        <title>Before/After vanilla javascript plugin</title>
+        <meta charset="utf-8">
+        <link type="text/css" rel="stylesheet" href="../dist/css/before-after.min.css" />
+        <script type="text/javascript">
+            document.addEventListener('DOMContentLoaded', function () {
+                var beforeAfterExample = new BeforeAfter(document.querySelector('#example'));
+            });
+        </script>
+    </head>
+    <body>
+        <div id="example">
+            <img src="img/before.jpg" alt="Before" />
+            <img src="img/after.jpg" alt="After" />
+        </div>
+        <script type="text/javascript" src="../dist/js/before-after.min.js"></script>
+    </body>
+</html>
