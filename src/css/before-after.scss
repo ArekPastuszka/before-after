@@ -17,7 +17,7 @@
             height: 100%;
             overflow: hidden;
             transform: translate(-50%);
-            img{
+            img, .layer{
                 transform: translate(50%);
             }
         }

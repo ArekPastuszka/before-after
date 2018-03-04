@@ -68,7 +68,11 @@ var BeforeAfter = (function () {
     };
 
     BeforeAfter.prototype.getImages = function () {
-        return this.getHandler().querySelectorAll('img');
+        var images = this.getHandler().querySelectorAll('img');
+        if(images.length === 0){
+            return this.getHandler().querySelectorAll('.layer');
+        }
+        return images;
     };
 
     BeforeAfter.prototype.bindEvents = function () {
@@ -86,7 +90,7 @@ var BeforeAfter = (function () {
 
         this.getContainer().addEventListener('mousemove', function (e) {
             if(self.isDragStart()){
-                self.update(e.screenX);
+                self.update(e.clientX);
             }
         });
     };
@@ -108,7 +112,7 @@ var BeforeAfter = (function () {
     };
 
     BeforeAfter.prototype.getPositionByOffset = function (offsetX) {
-        var prePosition = offsetX * 100 / this.getImagesWidth();
+        var prePosition = (offsetX - this.getHandlerOffsetX()) * 100 / this.getImagesWidth();
         var position = null;
         if(prePosition < 0){
             position = 0;
@@ -146,11 +150,19 @@ var BeforeAfter = (function () {
     };
 
     BeforeAfter.prototype.getPhotoBeforeImage = function () {
-        return this.getPhotoBefore().querySelector('img');
+        var photoBefore = this.getPhotoBefore().querySelector('img');
+        if(photoBefore === null){
+            return this.getPhotoBefore().querySelector('.layer');
+        }
+        return photoBefore;
     };
 
     BeforeAfter.prototype.getImagesWidth = function () {
         return this.getHandler().querySelector('.before-after').offsetWidth;
+    };
+
+    BeforeAfter.prototype.getHandlerOffsetX = function () {
+        return this.getHandler().getBoundingClientRect().left;
     };
 
     BeforeAfter.prototype.markDragStart = function () {
