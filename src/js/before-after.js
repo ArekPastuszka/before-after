@@ -78,21 +78,28 @@ var BeforeAfter = (function () {
     BeforeAfter.prototype.bindEvents = function () {
         var self = this;
 
-        this.getDragHandler().addEventListener('mousedown', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            self.markDragStart();
+        'mousedown touchstart'.split(' ').forEach(function(evt) {
+            self.getDragHandler().addEventListener(evt, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                self.markDragStart();
+            });
         });
 
-        document.addEventListener('mouseup', function () {
-            self.markDragStop();
+        'mouseup touchend'.split(' ').forEach(function (evt) {
+            document.addEventListener(evt, function () {
+                self.markDragStop();
+            });
         });
 
-        this.getContainer().addEventListener('mousemove', function (e) {
-            if(self.isDragStart()){
-                self.update(e.clientX);
-            }
-        });
+        'mousemove touchmove'.split(' ').forEach(function (evt) {
+            self.getContainer().addEventListener(evt, function (e) {
+                if(self.isDragStart()){
+                    var moveX = evt === 'touchmove' ? e.changedTouches[0].clientX : e.clientX;
+                    self.update(moveX);
+                }
+            });
+        })
     };
 
     BeforeAfter.prototype.getHandler = function () {
